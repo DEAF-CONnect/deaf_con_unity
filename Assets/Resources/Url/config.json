@@ -1,0 +1,8 @@
+{
+    "audio_websocket": "ws://3.35.41.240:8008",
+    "http_baseurl" : "http://3.35.41.240:8080",
+    "stt_websocket" : "ws://3.35.41.240:8080",
+    "concertId" : "QWER-2025",
+    "songId" : "1YEBOHIieNLUL3sCMzRg",
+    "unity_websocket" : "ws://3.35.41.240:8000"
+}

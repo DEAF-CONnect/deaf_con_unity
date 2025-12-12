@@ -1,0 +1,151 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\BeatSign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\BeatSign.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\TextScript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\TextScript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\WebSocketClient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\WebSocketClient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\UnityWebRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\character_\\UnityWebRequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\Pose_Player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\character_\\Pose_Player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\SignJsonManage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\character_\\SignJsonManage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\Skeleton_Mapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Assets\\character_\\Skeleton_Mapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\subi0\\Downloads\\Pose_Player.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "TextScript.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\TextScript.cs",
+              "RelativeDocumentMoniker": "Assets\\TextScript.cs",
+              "ToolTip": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\TextScript.cs",
+              "RelativeToolTip": "Assets\\TextScript.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAnAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T23:20:05.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "BeatSign.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\BeatSign.cs",
+              "RelativeDocumentMoniker": "Assets\\BeatSign.cs",
+              "ToolTip": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\BeatSign.cs",
+              "RelativeToolTip": "Assets\\BeatSign.cs",
+              "ViewState": "AQIAACIAAAAAAAAAAAAQwDQAAAA0AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T23:12:01.214Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "SignJsonManage.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\SignJsonManage.cs",
+              "RelativeDocumentMoniker": "Assets\\character_\\SignJsonManage.cs",
+              "ToolTip": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\SignJsonManage.cs",
+              "RelativeToolTip": "Assets\\character_\\SignJsonManage.cs",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T21:06:49.616Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Pose_Player.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\Downloads\\Pose_Player.cs",
+              "RelativeDocumentMoniker": "..\\..\\Downloads\\Pose_Player.cs",
+              "ToolTip": "C:\\Users\\subi0\\Downloads\\Pose_Player.cs",
+              "RelativeToolTip": "..\\..\\Downloads\\Pose_Player.cs",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAAGMAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T20:40:06.851Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Pose_Player.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\Pose_Player.cs",
+              "RelativeDocumentMoniker": "Assets\\character_\\Pose_Player.cs",
+              "ToolTip": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\Pose_Player.cs",
+              "RelativeToolTip": "Assets\\character_\\Pose_Player.cs",
+              "ViewState": "AQIAAD4AAAAAAAAAAAAjwFkAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:28:28.484Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "WebSocketClient.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\WebSocketClient.cs",
+              "RelativeDocumentMoniker": "Assets\\WebSocketClient.cs",
+              "ToolTip": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\WebSocketClient.cs",
+              "RelativeToolTip": "Assets\\WebSocketClient.cs",
+              "ViewState": "AQIAAMUAAAAAAAAAAAAIwNoAAABEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T18:51:37.412Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UnityWebRequest.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\UnityWebRequest.cs",
+              "RelativeDocumentMoniker": "Assets\\character_\\UnityWebRequest.cs",
+              "ToolTip": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\UnityWebRequest.cs",
+              "RelativeToolTip": "Assets\\character_\\UnityWebRequest.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAABKAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T16:02:14.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Skeleton_Mapper.cs",
+              "DocumentMoniker": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\Skeleton_Mapper.cs",
+              "RelativeDocumentMoniker": "Assets\\character_\\Skeleton_Mapper.cs",
+              "ToolTip": "C:\\Users\\subi0\\AR-sign-lang-proj\\AR Sign Lang project\\Assets\\character_\\Skeleton_Mapper.cs",
+              "RelativeToolTip": "Assets\\character_\\Skeleton_Mapper.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAACwCAAAFAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T08:34:36.643Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
