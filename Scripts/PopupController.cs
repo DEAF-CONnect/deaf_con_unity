@@ -16,7 +16,7 @@ public class PopupController : MonoBehaviour
     {
         messageText.text = message;
         popupBox.gameObject.SetActive(true);
-        StartCoroutine(HideAfterSeconds(2f)); //3ÃÊµÚ¿¡ ´Ù½Ã ¾ø¾îÁü
+        StartCoroutine(HideAfterSeconds(2f)); //2ì´ˆë™ì•ˆ ë„ìš°ê¸°
     }
     private System.Collections.IEnumerator HideAfterSeconds(float seconds)
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-// FrameData¿Í Landmark ±¸Á¶Ã¼´Â ¿ÜºÎ¿¡¼­ Á¤ÀÇµÇ¾ú´Ù°í °¡Á¤ÇÕ´Ï´Ù.
+// FrameDataï¿½ï¿½ Landmark ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ÜºÎ¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ÇµÇ¾ï¿½ï¿½Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 // public class FrameData { public float t; public Landmark[] pose; public Landmark[] left_hand; public Landmark[] right_hand; }
 // public struct Landmark { public float x, y, z; public float visibility; }
 
@@ -15,11 +15,11 @@ public class SkeletonMapper : MonoBehaviour
     public Animator animator;
 
     [Header("Scale/Depth")]
-    [Tooltip("Á¤±ÔÈ­(0~1) ÁÂÇ¥¸¦ ¿ùµå·Î º¯È¯ÇÒ ¶§ÀÇ Å©±â ¹èÀ²")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½È­(0~1) ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     public float worldScale = 1.5f;
 
     [Header("Smoothing")]
-    [Range(0f, 1f)] public float emaAlpha = 0.3f; // 0.6: ¹ÝÀÀ ºü¸§(³ëÀÌÁî¡è) / 0.2: ¾ÈÁ¤(Áö¿¬¡è)
+    [Range(0f, 1f)] public float emaAlpha = 0.3f; // 0.6: ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½) / 0.2: ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
     [Header("Arm Fine Tuning")]
     public Vector3 leftUpperArmOffsetEuler = Vector3.zero;
@@ -37,20 +37,17 @@ public class SkeletonMapper : MonoBehaviour
     
     private readonly Dictionary<HumanBodyBones, BoneBindInfo> _boneBind = new();
     private readonly Dictionary<HumanBodyBones, Vector3> _emaDir = new();
-    // ===== 2.5D Depth º¯¼ö (±âÁ¸ ·ÎÁ÷ À¯Áö) =====
     [Header("2.5D Depth")]
-    public Camera refCam;       // Åõ¿µ ±âÁØ Ä«¸Þ¶ó
-    public float z0 = 2.0f;     // ±âº» ±íÀÌ(¹ÌÅÍ)
-    public float depthGain = 0.8f; // k (±íÀÌ º¸Á¤ °­µµ)
+    public Camera refCam;
+    public float z0 = 2.0f; 
+    public float depthGain = 0.8f;
 
-    [Range(0f, 1f)] public float depthEma = 0.3f; // ±íÀÌ ½º¹«µù
-    public int refInitFrames = 15; // Wref ÃÊ±âÈ­¿¡ »ç¿ëÇÒ ÇÁ·¹ÀÓ °³¼ö
-
+    [Range(0f, 1f)] public float depthEma = 0.3f; 
+    public int refInitFrames = 15; 
     private float _Wref = 0f;
     private int _WaccumCount = 0;
-    private float _depth;        // ÇöÀç EMAµÈ ±íÀÌ
+    private float _depth;
 
-    // MediaPipe Index Âü°í (ÁÖ¿äºÎ¸¸)
     // Pose(33): 11=LShoulder, 12=RShoulder, 13=LElbow, 14=RElbow, 15=LWrist, 16=RWrist,
     //           23=LHip, 24=RHip, 25=LKnee, 26=RKnee, 27=LAnkle, 28=RAnkle
 
@@ -66,8 +63,6 @@ public class SkeletonMapper : MonoBehaviour
         latestFrame = f;
     }
 
-    // IK ·ÎÁ÷ÀÌ ¾øÀ¸¹Ç·Î OnAnimatorIK ¸Þ¼­µå´Â Á¦°Å/ÁÖ¼® Ã³¸®ÇÕ´Ï´Ù.
-    // private void OnAnimatorIK(int layerIndex) { /* IK logic removed */ }
 
     void LateUpdate()
     {
@@ -75,19 +70,14 @@ public class SkeletonMapper : MonoBehaviour
         {
             if (latestFrame.pose != null && latestFrame.pose.Length >= 9)
             {
-                // ±íÀÌ °è»êÀº À¯Áö (2.5D ¿ùµå ÁÂÇ¥ º¯È¯À» À§ÇØ ÇÊ¿ä)
                 UpdateDepth(latestFrame.pose);
             }
 
-            // IK Targets ¾÷µ¥ÀÌÆ® ·ÎÁ÷ Á¦°Å
-            // UpdateIKTargets(latestFrame); // Á¦°ÅµÊ
 
-            // Æ÷Áî ¹× ¼Õ°¡¶ô È¸Àü¸¸ Àû¿ë
             ApplyFrame(latestFrame);
         }
     }
 
-    // (ShoulderWidth, UpdateDepth, ToWorld2_5D ¸Þ¼­µå´Â ±âÁ¸°ú µ¿ÀÏÇÏ°Ô À¯Áö)
 
     float ShoulderWidth(Landmark[] pose)
     {
@@ -103,16 +93,12 @@ public class SkeletonMapper : MonoBehaviour
         var r = pose[2];
         var l = pose[5];
 
-        // 2D »óÀÇ ¾î±ú °Å¸®
         float dx = r.x - l.x;
         float dy = r.y - l.y;
         float dist = Mathf.Sqrt(dx * dx + dy * dy);
 
-        // dist°¡ ÀÛÀ»¼ö·Ï ¸Ö¸®, Å¬¼ö·Ï °¡±îÀÌ ÀÖ´Ù°í °¡Á¤ÇØ¼­
-        // °£´ÜÇÏ°Ô ±íÀÌ ½ºÄÉÀÏÀ» ¸¸µç´Ù (ÀÓÀÇ °ª, ÇÊ¿ä½Ã Á¶Á¤)
         float targetDepth = 1.0f / Mathf.Max(dist, 0.001f);
 
-        // _depth °ªÀ» ¼­¼­È÷ º¸°£ÇØ¼­ Æ¢Áö ¾Ê°Ô
         _depth = Mathf.Lerp(_depth, targetDepth, Time.deltaTime * 5f);
     }
 
@@ -120,74 +106,31 @@ public class SkeletonMapper : MonoBehaviour
     {
         if (!refCam)
         {
-            // Ä«¸Þ¶ó ¾øÀ¸¸é ´ë·«ÀûÀÎ Æò¸é º¯È¯
             float x = (lm.x - 0.5f) * worldScale;
             float y = (0.5f - lm.y) * worldScale;
             return new Vector3(x, y, 0f);
         }
 
-        // 0~1 ¡æ È­¸é Áß½É ±âÁØ ÁÂÇ¥ (-0.5 ~ 0.5)
-        float nx = lm.x - 0.5f;   // ¿À¸¥ÂÊÀÌ +X
-        float ny = 0.5f - lm.y;   // À§ÂÊÀÌ +Y
+        float nx = lm.x - 0.5f;   
+        float ny = 0.5f - lm.y;
 
-        // Ä«¸Þ¶ó ·ÎÄÃ ÁÂÇ¥°è ±âÁØ À§Ä¡
         Vector3 local =
             refCam.transform.right * (nx * worldScale) +
             refCam.transform.up * (ny * worldScale) +
             refCam.transform.forward * Mathf.Max(0.01f, _depth);
 
-        // Ä«¸Þ¶ó À§Ä¡¿¡¼­ ÀÌµ¿
         return refCam.transform.position + local;
-        /***
-         * float nx = 1f - lm.x;
-        float ny = lm.y;
-
-        if (refCam)
-        {
-            float px = nx * Screen.width;
-            float py = (1f - ny) * Screen.height;
-            return refCam.ScreenToWorldPoint(new Vector3(px, py, Mathf.Max(0.01f, _depth)));
-        }
-
-        // Ä«¸Þ¶ó ¾øÀ» °æ¿ì ±âÁØ º¯È¯
-        return new Vector3((nx - 0.5f) * worldScale, (0.5f - ny) * worldScale, 0f);
-         * 
-         * 
-         * 
-         * **/
 
     }
 
     void Start()
     {
-        /*
-        if (refCam)
-        {
-            Vector3 fwd = refCam.transform.forward;
-            fwd.y = 0f;  // ¼öÆò¸¸ À¯Áö
-            if (fwd.sqrMagnitude > 0.0001f)
-                transform.rotation = Quaternion.LookRotation(fwd, Vector3.up);
-        }*/
-        // IK¸¦ »ç¿ëÇÏÁö ¾ÊÀ¸¹Ç·Î, ÆÈ/´Ù¸®/»óÃ¼/¼Õ°¡¶ô µî ¿òÁ÷¿©¾ß ÇÒ ¸ðµç »ÀÀÇ ¹ÙÀÎµå È¸ÀüÀ» Ä³½ÃÇÕ´Ï´Ù.
         CacheBone(HumanBodyBones.LeftUpperArm, HumanBodyBones.LeftLowerArm);
         CacheBone(HumanBodyBones.LeftLowerArm, HumanBodyBones.LeftHand);
         CacheBone(HumanBodyBones.RightUpperArm, HumanBodyBones.RightLowerArm);
         CacheBone(HumanBodyBones.RightLowerArm, HumanBodyBones.RightHand);
 
-        // ´Ù¸®
-        //CacheBone(HumanBodyBones.LeftUpperLeg, HumanBodyBones.LeftLowerLeg);
-        //CacheBone(HumanBodyBones.LeftLowerLeg, HumanBodyBones.LeftFoot);
-        //CacheBone(HumanBodyBones.RightUpperLeg, HumanBodyBones.RightLowerLeg);
-        //CacheBone(HumanBodyBones.RightLowerLeg, HumanBodyBones.RightFoot);
-
-        // Ã´Ãß/¸Ó¸® (ÀÚ½ÄÀÌ ÀÖÀ¸¸é ÀÚ½Ä ¹æÇâ, ¾øÀ¸¸é º»ÀÇ forward »ç¿ë)
-        //CacheBone(HumanBodyBones.Spine, HumanBodyBones.Chest);
-        //CacheBone(HumanBodyBones.Chest, HumanBodyBones.UpperChest);
-        //CacheBone(HumanBodyBones.UpperChest, HumanBodyBones.Neck);
-        //CacheBone(HumanBodyBones.Head, null); // forward Ãà »ç¿ë
-
-        // ¼Õ°¡¶ô (proximal ¡æ intermediate, intermediate ¡æ distal, distalÀº tip ÂÊÀÌ ¾øÀ¸´Ï forward »ç¿ë)
-        // ¿Þ¼Õ
+        
         CacheBone(HumanBodyBones.LeftThumbProximal, HumanBodyBones.LeftThumbIntermediate);
         CacheBone(HumanBodyBones.LeftThumbIntermediate, HumanBodyBones.LeftThumbDistal);
         CacheBone(HumanBodyBones.LeftThumbDistal, null);
@@ -208,7 +151,7 @@ public class SkeletonMapper : MonoBehaviour
         CacheBone(HumanBodyBones.LeftLittleIntermediate, HumanBodyBones.LeftLittleDistal);
         CacheBone(HumanBodyBones.LeftLittleDistal, null);
 
-        // ¿À¸¥¼Õ
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         CacheBone(HumanBodyBones.RightThumbProximal, HumanBodyBones.RightThumbIntermediate);
         CacheBone(HumanBodyBones.RightThumbIntermediate, HumanBodyBones.RightThumbDistal);
         CacheBone(HumanBodyBones.RightThumbDistal, null);
@@ -241,7 +184,7 @@ public class SkeletonMapper : MonoBehaviour
         {
             Transform c = animator.GetBoneTransform(childBone.Value);
             if (c)
-                dirWorld = (c.position - t.position).normalized;  // ¹ÙÀÎµå Æ÷Áî¿¡¼­ ½ÇÁ¦·Î ÇâÇÏ´ø ¹æÇâ
+                dirWorld = (c.position - t.position).normalized;  // ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½î¿¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½
             else
                 dirWorld = (t.rotation * Vector3.forward).normalized;
         }
@@ -257,8 +200,6 @@ public class SkeletonMapper : MonoBehaviour
         };
     }
 
-    // ======== °ø°³ API ========
-
     public void ApplyFrame(FrameData f)
     {
         if (f == null) return;
@@ -270,7 +211,6 @@ public class SkeletonMapper : MonoBehaviour
             return;
         }
 
-        // ³ÊÀÇ JSONÀº pose°¡ 25°³ÀÌ¹Ç·Î, ÃÖ¼Ò ±æÀÌ¸¦ 25·Î ¸ÂÃá´Ù
         if (f.pose.Length < 25)
         {
             Debug.LogWarning($"Pose too short (len={f.pose.Length}). Applying hands only.");
@@ -279,7 +219,6 @@ public class SkeletonMapper : MonoBehaviour
             return;
         }
 
-        // ¿©±â±îÁö ¿ÔÀ¸¸é ¸ö + ¼Õ ¸ðµÎ Àû¿ë
         ApplyPose(f.pose, f.left_hand, f.right_hand);
         ApplyHands(f.left_hand, true);
         ApplyHands(f.right_hand, false);
@@ -320,7 +259,6 @@ public class SkeletonMapper : MonoBehaviour
     {
         if (hand == null || hand.Length < 21) return;
 
-        // °¢ ¼Õ°¡¶ô: Proximal/Intermediate/DistalÀ» Tip ¹æÇâÀ¸·Î È¸Àü
         if (isLeft)
         {
             ApplyFingerChain(hand, 5, 6, 7, 8, HumanBodyBones.LeftIndexProximal, HumanBodyBones.LeftIndexIntermediate, HumanBodyBones.LeftIndexDistal);
@@ -341,62 +279,7 @@ public class SkeletonMapper : MonoBehaviour
 
     #region ---- Internals ----
 
-    // (ApplyLimbByPoints, ApplyFingerChain ¸Þ¼­µå´Â ±âÁ¸°ú µ¿ÀÏÇÏ°Ô À¯Áö)
-    /*
-    void ApplyLimbByPoints(Landmark[] arr, int rootIdx, int midIdx, int tipIdx,
-                       HumanBodyBones upper, HumanBodyBones lower)
-    {
-        if (arr == null || arr.Length <= Math.Max(rootIdx, Math.Max(midIdx, tipIdx)))
-            return;
 
-        // 1) ÇöÀç ¿ùµå ÁÂÇ¥
-        Vector3 pRootW = ToWorld2_5D(arr[rootIdx]);
-        Vector3 pMidW = ToWorld2_5D(arr[midIdx]);
-        Vector3 pTipW = ToWorld2_5D(arr[tipIdx]);
-
-        Vector3 dirUpperW = SafeDir(pMidW - pRootW); // ¾î±ú ¡æ ÆÈ²ÞÄ¡
-        Vector3 dirLowerW = SafeDir(pTipW - pMidW);  // ÆÈ²ÞÄ¡ ¡æ ¼Õ¸ñ
-
-        ApplyBoneLook(upper, dirUpperW);
-        ApplyBoneLook(lower, dirLowerW);
-
-
-        Vector3 dirUpperW;
-        Vector3 dirLowerW;
-
-        if (refCam)
-        {
-            // 2) Ä«¸Þ¶ó ·ÎÄÃ ÁÂÇ¥·Î º¯È¯
-            Vector3 pRootC = refCam.transform.InverseTransformPoint(pRootW);
-            Vector3 pMidC = refCam.transform.InverseTransformPoint(pMidW);
-            Vector3 pTipC = refCam.transform.InverseTransformPoint(pTipW);
-
-            // 3) Ä«¸Þ¶ó ±âÁØ ¹æÇâ °è»ê
-            Vector3 dirUpperC = pMidC - pRootC; // ¾î±ú¡æÆÈ²ÞÄ¡
-            Vector3 dirLowerC = pTipC - pMidC;  // ÆÈ²ÞÄ¡¡æ¼Õ¸ñ
-
-            // ¢º Ç×»ó "Ä«¸Þ¶ó ¾ÕÂÊ"¿¡¼­ ¿òÁ÷ÀÌµµ·Ï z¸¦ ¾Õ(+°ª)À¸·Î ¹Ð¾îÁÜ
-            dirUpperC.z = Mathf.Abs(dirUpperC.z) + 0.1f;
-            dirLowerC.z = Mathf.Abs(dirLowerC.z) + 0.1f;
-
-            dirUpperC.Normalize();
-            dirLowerC.Normalize();
-
-            // 4) ´Ù½Ã ¿ùµå ¹æÇâÀ¸·Î º¯È¯
-            dirUpperW = refCam.transform.TransformDirection(dirUpperC);
-            dirLowerW = refCam.transform.TransformDirection(dirLowerC);
-        }
-        else
-        {
-            // Ä«¸Þ¶ó ¾øÀ¸¸é ±âÁ¸ ¹æ½Ä À¯Áö
-            dirUpperW = SafeDir(pMidW - pRootW);
-            dirLowerW = SafeDir(pTipW - pMidW);
-        }
-
-        // 5) ÃÖÁ¾ È¸Àü Àû¿ë
-        ApplyBoneLook(upper, dirUpperW);
-        ApplyBoneLook(lower, dirLowerW);
-      }*/
     void ApplyArmWithHand(
     Landmark[] pose, Landmark[] hand,
     int shoulderIdx, int elbowIdx,
@@ -414,7 +297,6 @@ public class SkeletonMapper : MonoBehaviour
 
         if (refCam)
         {
-            // Ä«¸Þ¶ó ±âÁØ ·ÎÄÃ º¯È¯
             Vector3 sC = refCam.transform.InverseTransformPoint(pShoulderW);
             Vector3 eC = refCam.transform.InverseTransformPoint(pElbowW);
             Vector3 wC = refCam.transform.InverseTransformPoint(pWristW);
@@ -422,7 +304,6 @@ public class SkeletonMapper : MonoBehaviour
             Vector3 dirUpperC = eC - sC;
             Vector3 dirLowerC = wC - eC;
 
-            // === ÇÙ½É: zÃàÀº ¹«Á¶°Ç ¾ÕÂÊ(+z)À¸·Î ===
             if (dirUpperC.z > 0f) dirUpperC.z = -dirUpperC.z;
             dirUpperC.z -= 0.1f;
 
@@ -463,36 +344,12 @@ public class SkeletonMapper : MonoBehaviour
         Vector3 dProx = SafeDir(pB - pA);
         Vector3 dInter = SafeDir(pC - pB);
         Vector3 dDist = SafeDir(pTp - pC);
-        /*Ãß°¡ºÎºÐ ApplyFingerLook
         
-        ApplyFingerLook(prox, dProx);
-
-        // Intermediate´Â Proximal ±âÁØ È¸Àü
-        Transform tProx = animator.GetBoneTransform(prox);
-        if (tProx)
-        {
-            Vector3 interDirLocal = tProx.InverseTransformDirection(dInter);
-            animator.GetBoneTransform(inter).rotation = tProx.rotation * Quaternion.LookRotation(interDirLocal, tProx.up);
-        }
-
-        // DistalÀº Intermediate ±âÁØ È¸Àü
-        Transform tInter = animator.GetBoneTransform(inter);
-        if (tInter)
-        {
-            Vector3 distDirLocal = tInter.InverseTransformDirection(dDist);
-            animator.GetBoneTransform(dist).rotation = tInter.rotation * Quaternion.LookRotation(distDirLocal, tInter.up);
-        }
-        /*Àá½Ã¼öÁ¤ºÎºÐ*/
         ApplyBoneLook(prox, dProx);
         ApplyBoneLook(inter, dInter);
         ApplyBoneLook(dist, dDist);
     }
-    //private Dictionary<HumanBodyBones, Quaternion> boneOffset = new Dictionary<HumanBodyBones, Quaternion>();
-
-    // IK Á¦¾î »À ¸ñ·Ï (IK°¡ Á¦°ÅµÇ¾úÀ¸¹Ç·Î, ÀÌ SetÀº ÀÌÁ¦ ºñ¾î ÀÖ°Å³ª, ´Ù¸¥ ¿ëµµ·Î »ç¿ëµÇÁö ¾Ê´Â´Ù¸é Á¦°Å °¡´É)
-    // ¼ø¼ö È¸Àü ¹æ½Ä¿¡¼­´Â ¸ðµç »À¿¡ È¸ÀüÀ» Àû¿ëÇØ¾ß ÇÕ´Ï´Ù.
-    //private static readonly HashSet<HumanBodyBones> IkControlledBones = new HashSet<HumanBodyBones>();
-    /*Ãß°¡ºÎºÐ */
+    
     private readonly Dictionary<HumanBodyBones, Vector3> _emaFingerDir = new();
 
     void ApplyFingerLook(HumanBodyBones bone, Vector3 worldDir)
@@ -518,7 +375,7 @@ public class SkeletonMapper : MonoBehaviour
 
         worldDir = SafeDir(worldDir);
 
-        // EMA ½º¹«µù
+        // EMA
         if (_emaDir.TryGetValue(bone, out var prev))
             worldDir = Vector3.Normalize((1f - emaAlpha) * prev + emaAlpha * worldDir);
         _emaDir[bone] = worldDir;
@@ -528,7 +385,7 @@ public class SkeletonMapper : MonoBehaviour
             Quaternion fromTo = Quaternion.FromToRotation(info.bindDirWorld, worldDir);
             Quaternion result = fromTo * info.bindRot;
 
-            // ¿©±â¼­ ÆÈ¿¡¸¸ º¸Á¤°¢µµ Àû¿ë
+            
             switch (bone)
             {
                 case HumanBodyBones.LeftUpperArm:

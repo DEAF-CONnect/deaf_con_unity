@@ -11,8 +11,7 @@ public class PopupManager : MonoBehaviour
 {
     public PopupController popup;
 
-    // ���ÿ� concertId, songId
-    public string concertId = "QWER-2025 �λ� ���� �� �佺Ƽ��";
+    public string concertId = "QWER-2025 부산 국제 록 페스티벌";
     public string songId = "1YEBOHIieNLUL3sCMzRg";
     
     private string baseUrlConcert;
@@ -29,7 +28,6 @@ public class PopupManager : MonoBehaviour
 
     private IEnumerator FetchAndShowPopup()
     {
-        // 1) concertId�� artist ���� ��������
         string artist = "Unknown";
         using (UnityWebRequest reqConcert = UnityWebRequest.Get(baseUrlConcert))
         {
@@ -37,13 +35,11 @@ public class PopupManager : MonoBehaviour
 
             if (reqConcert.result == UnityWebRequest.Result.Success)
             {
-                // JSON �Ľ� ��: { "artist": "QWER" }
                 var json = reqConcert.downloadHandler.text;
                 artist = JsonUtility.FromJson<ArtistResponse>(json).artist;
             }
         }
 
-        // 2) songId�� songTitle ���� ��������
         string songTitle = "Unknown";
         using (UnityWebRequest reqSong = UnityWebRequest.Get(baseUrlSong))
         {
@@ -51,14 +47,12 @@ public class PopupManager : MonoBehaviour
 
             if (reqSong.result == UnityWebRequest.Result.Success)
             {
-                // JSON �Ľ� ��: { "title": "�����ߵ�" }
                 var json = reqSong.downloadHandler.text;
                 songTitle = JsonUtility.FromJson<SongResponse>(json).title;
             }
         }
 
-        // 3) �˾� ����
-        string message = $"{artist} - {songTitle}";
+        string message = $"{artist} - {songTitle}"; //popup에 띄우기
         popup.ShowPopup(message);
     }
 

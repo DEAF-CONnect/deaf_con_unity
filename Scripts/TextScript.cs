@@ -18,7 +18,6 @@ public class AppConfig
 
 public class TextScript : MonoBehaviour
 {
-    // react native���� �޾ƿ� concertId
     public string concertId;
     public string songId;
     public TMP_Text lyricsText;
@@ -26,42 +25,16 @@ public class TextScript : MonoBehaviour
 
     void Start()
     {
-        // Android Intent���� concertId ��������
-       /*
-#if UNITY_ANDROID
-        try
-        {
-            AndroidJavaClass unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            AndroidJavaObject currentActivity = unityPlayer.GetStatic<AndroidJavaObject>("currentActivity");
-            AndroidJavaObject intent = currentActivity.Call<AndroidJavaObject>("getIntent");
-
-            concertId = intent.Call<string>("getStringExtra", "concertId");
-            if (string.IsNullOrEmpty(concertId))
-            {
-                concertId = "default"; // fallback ��
-            }
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError("Failed to get concertId: " + e.Message);
-            concertId = "default";
-        }
-#else
-        
-#endif */
-
-        // URL ����
         baseUrl = $"{baseUrl}/api/concerts/{concertId}/songs/";
 
         Debug.Log("Base URL: " + baseUrl );
 
-        // ������ ��������
         StartCoroutine(GetSongData());
     }
 
     IEnumerator GetSongData()
     {
-        string url = baseUrl + songId; // ���� URL: /api/concerts/{concertId}/songs/{songId}
+        string url = baseUrl + songId; 
 
         using (UnityWebRequest req = UnityWebRequest.Get(url))
         {
@@ -90,21 +63,19 @@ public class TextScript : MonoBehaviour
 
     IEnumerator DisplayLyricsOneByOne(string[] lyrics)
     {
-        lyricsText.text = ""; // �ʱ�ȭ
+        lyricsText.text = ""; 
 
         List<(float time, string text)> timedLines = new List<(float, string)>();
 
         foreach (string line in lyrics)
         {
             int end = line.IndexOf(']');
-            string timeStr = line.Substring(1, end - 1); // �ð�
-            string text = line.Substring(end + 1).Trim(); // ����
+            string timeStr = line.Substring(1, end - 1); 
+            string text = line.Substring(end + 1).Trim();
 
             float t = ParseTimeToSeconds(timeStr);
             timedLines.Add((t, text));
         }
-
-        // �ð��� ����
         timedLines.Sort((a, b) => a.time.CompareTo(b.time));
 
         float startTime = Time.time;
@@ -113,7 +84,6 @@ public class TextScript : MonoBehaviour
         {
             float targetTime = startTime + item.time;
 
-            // ���� �ð��� ��ǥ �ð����� ������ ���
             while (Time.time < targetTime)
                 yield return null;
 

@@ -21,7 +21,6 @@ public class BeatSign : MonoBehaviour
     {
         if (beatJsonFile == null)
         {
-            Debug.LogError("[BeatVibration] beatJsonFile�� ����!");
             return;
         }
 
@@ -29,9 +28,9 @@ public class BeatSign : MonoBehaviour
         beats = data.beats;
 
         if (beats == null || beats.Length == 0)
-            Debug.LogError("[BeatVibration] beats �������");
+            Debug.LogError("[BeatVibration]There's no beats");
         else
-            Debug.Log($"[BeatVibration] beats {beats.Length}�� �ε�");
+            Debug.Log($"[BeatVibration] beats {beats.Length}");
     }
     IEnumerator PlayBeats()
     {
@@ -50,19 +49,14 @@ public class BeatSign : MonoBehaviour
 
             TriggerVibration();
         }
-
-        Debug.Log("[BeatVibration] ��� ��Ʈ ���� �Ϸ�");
     }
 
-    // --------------------------------------------------
-    // 3) ���� Ʈ����
-    // --------------------------------------------------
     void TriggerVibration()
     {
 #if UNITY_ANDROID || UNITY_IOS
         Handheld.Vibrate();
 #endif
 
-        Debug.Log("?? VIBRATE!");
+        Debug.Log("VIBRATE!");
     }
 }

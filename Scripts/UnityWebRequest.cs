@@ -27,11 +27,7 @@ public class UnityWebSocketPlayer : MonoBehaviour
         {
             //if (!active)return;
             string json = System.Text.Encoding.UTF8.GetString(bytes);
-            //lock(messageQueue)
-            //{
-            //    messageQueue.Enqueue(json);
-            //}
-            // ?????? JSON ?�� ???��? ??????? ?????? ???? ???
+            
             FrameData[] frames = JsonHelper.FromJson<FrameData>(json);
             lock (frameQueueLock)
             {
@@ -55,17 +51,17 @@ public class UnityWebSocketPlayer : MonoBehaviour
     }
     private async Task ConnectWebSocketDelayed(float delaySeconds)
     {
-        Debug.Log($"������ ���� ��� {delaySeconds}��...");
+        Debug.Log($"{delaySeconds}초후에 연결...");
         await Task.Delay(TimeSpan.FromSeconds(delaySeconds));
 
         try
         {
             await websocket.Connect();
-            Debug.Log("������ ���� �Ϸ�");
+            Debug.Log("connect 성공");
         }
         catch (Exception ex)
         {
-            Debug.LogError("������ ���� ����: " + ex);
+            Debug.LogError("connect 실패: " + ex);
         }
     }
     void Update()
@@ -78,19 +74,13 @@ public class UnityWebSocketPlayer : MonoBehaviour
         {
             if (frameQueue.Count > 0)
             {
-                //lock (messageQueue)
-                //{
-                //    json = messageQueue.Dequeue();
-                //}
+                
                 Debug.Log("websocket frame !");
 
                 FrameData frame = frameQueue.Dequeue();
-                //var frame = JsonUtility.FromJson<FrameData>(frame);
-                //FrameData frame = JsonUtility.FromJson<FrameData>(json);
-                //if (frame != null)
-                //{
+                
                 skeletonMapper.SetFrame(frame);
-                //}
+                
 
             }
 

@@ -13,8 +13,6 @@ public class SttTextController : MonoBehaviour
     private WebSocket websocket;
     public string stt_websocket;
     public string serverUrl = $"{stt_websocket}/ws/stt";
-    // Unity���� �ٸ� �ڵ尡 ������ �� �ִ� �̺�Ʈ
-    //public event Action<string> OnSTTTextReceived;
 
     public TMP_Text textUI;
 
@@ -30,8 +28,7 @@ async void Start()
 
         websocket.OnMessage += (bytes) =>
         {
-            //Debug.Log("���� bytes ����: " + bytes.Length);
-            //Debug.Log("HEX: " + BitConverter.ToString(bytes));
+           
             string sttM = Encoding.UTF8.GetString(bytes);
             Debug.Log("WS STT TEXT: " + sttM);
             if (textUI != null)
