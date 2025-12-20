@@ -19,7 +19,7 @@ public class WebSocketClient : MonoBehaviour
     private AudioClip recordedClip;
     private string micDevice = null;
 
-    private const int SampleRate = 48000;  // ?????? ????? ?????? ???? ????
+    private const int SampleRate = 48000;  
 
     private int lastSamplePosition = 0;
     private readonly object audioQueueLock = new object();
@@ -27,33 +27,33 @@ public class WebSocketClient : MonoBehaviour
     //public bool active = false;
     void Start()
     {
-        // 1. 
+ 
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
-            Debug.Log("��ȯ Ȯ�� ��");
+            Debug.Log("Start");
             Permission.RequestUserPermission(Permission.Microphone);
             return;
         }
 
-        Debug.Log("����ũ ��ȯ Ȯ�ε�");
+        Debug.Log("Open !");
 
-        // 2. 
+
         ws = new WebSocket(serverUrl);
 
         ws.OnOpen += () =>
         {
-            Debug.Log("����� ������ ����");
-            InitMicrophone();   // ????? ?��? ????? ??
+            Debug.Log("[WebSocket Open]]");
+            InitMicrophone();  
         };
 
         ws.OnError += (err) =>
         {
-            Debug.LogError("����� ������ ����: " + err);
+            Debug.LogError("[WebSocket Error]: " + err);
         };
 
         ws.OnClose += (code) =>
         {
-            Debug.Log("����� ������ ����: " + code);
+            Debug.Log("[WebSocket Closed]: " + code);
         };
 
         _ = ConnectWebSocket(70);
@@ -61,16 +61,16 @@ public class WebSocketClient : MonoBehaviour
 
     private async Task ConnectWebSocket(float delaySeconds)
     {
-        Debug.Log($"������ ���� ��� {delaySeconds}��...");
+        Debug.Log($" {delaySeconds}초후에 연결...");
         await Task.Delay(TimeSpan.FromSeconds(delaySeconds));
         try
         {
             await ws.Connect();
-            Debug.Log("������ Connect() �Ϸ�(Task)");
+            Debug.Log("Connect() 성공(Task)");
         }
         catch (Exception ex)
         {
-            Debug.LogError("������ Connect() ����: " + ex);
+            Debug.LogError("Connect() 실패: " + ex);
         }
     }
 
@@ -79,12 +79,12 @@ public class WebSocketClient : MonoBehaviour
         if (Microphone.devices.Length > 0)
         {
             micDevice = Microphone.devices[0];
-            Debug.Log("����ϴ� ����ũ: " + micDevice);
+            Debug.Log("연결된 mic: " + micDevice);
         }
         else
         {
-            micDevice = null; // ?? ??????
-            Debug.Log("Microphone.devices�� ���̰� �����ϴ�.(null) ");
+            micDevice = null;
+            Debug.Log("Microphone.devices 가 연결되지 않았음.(null) ");
         }
 
         StartRecording();
@@ -92,17 +92,17 @@ public class WebSocketClient : MonoBehaviour
 
     private void StartRecording()
     {
-        Debug.Log("���� ����");
+        Debug.Log("녹음 시작");
 
         recordedClip = Microphone.Start(micDevice, true, 10, SampleRate);
 
         if (recordedClip == null)
         {
-            Debug.LogError("���� �ȵ�");
+            Debug.LogError("녹음 실패");
             return;
         }
 
-        Debug.Log($"���� �Ϸ�: lengthSamples={recordedClip.samples}, freq={recordedClip.frequency}");
+        Debug.Log($"녹음 길이: lengthSamples={recordedClip.samples}, freq={recordedClip.frequency}");
         lastSamplePosition = 0;
     }
 
@@ -119,11 +119,9 @@ public class WebSocketClient : MonoBehaviour
             if (recordedClip == null || ws == null || ws.State != WebSocketState.Open)
                 return;
 
-            // ???? ??????? ???????????? 0?? ?? ????
             int currentPosition = Microphone.GetPosition(micDevice);
             Debug.Log($"[Update] currentPosition = {currentPosition}, lastSamplePosition = {lastSamplePosition}");
 
-            // ???? ????? ???? ??????? ?? ???????
             if (currentPosition <= 0)
             {
                 Debug.Log("[Update] currentPosition <= 0");
@@ -133,7 +131,7 @@ public class WebSocketClient : MonoBehaviour
             int sampleCount = currentPosition - lastSamplePosition;
             if (sampleCount < 0)
             {
-                sampleCount += recordedClip.samples; // ???? ???? ????
+                sampleCount += recordedClip.samples; 
             }
 
             Debug.Log($"[Update] sampleCount = {sampleCount}, totalSamples = {recordedClip.samples}");
@@ -148,12 +146,10 @@ public class WebSocketClient : MonoBehaviour
 
             if (lastSamplePosition + sampleCount <= recordedClip.samples)
             {
-                // ?? ???? ?��?
                 recordedClip.GetData(floatBuffer, lastSamplePosition);
             }
             else
             {
-                // ???? ?? ??? ?? ?? ?? ???? ?��?
                 int firstPart = recordedClip.samples - lastSamplePosition;
                 int secondPart = sampleCount - firstPart;
 
@@ -167,7 +163,7 @@ public class WebSocketClient : MonoBehaviour
             lastSamplePosition = currentPosition;
 
             byte[] pcmBytes = FloatToInt16Bytes(floatBuffer);
-            Debug.Log($"[Update] ����� ���̳�;: {pcmBytes.Length} bytes");
+            Debug.Log($"[Update] 성공: {pcmBytes.Length} bytes");
             //lock
             lock (audioQueueLock)
             {
@@ -178,7 +174,7 @@ public class WebSocketClient : MonoBehaviour
         }
         catch (Exception ex)
         {
-            Debug.LogWarning("[Update] ���� : " + ex.Message);
+            Debug.LogWarning("[Update] 실패 : " + ex.Message);
         }
     }
 
@@ -199,19 +195,7 @@ public class WebSocketClient : MonoBehaviour
     //private async Task SendBytes(byte[] data)
     private async Task SendQueuedAudio()
     {
-        //Debug.Log($"[SendBytes] . data.Length = {data.Length}");
-        /*
-        if (ws == null)
-        {
-            Debug.LogWarning("[SendBytes] ws == null");
-            return;
-        }
-
-        if (ws.State != WebSocketState.Open)
-        {
-            Debug.LogWarning("[SendBytes] ���� ���� ��� ��Ȳ: " + ws.State);
-            return;
-        }*/
+        
         if (ws == null || ws.State != WebSocketState.Open) return;
         while (true)
         {
@@ -229,18 +213,9 @@ public class WebSocketClient : MonoBehaviour
             }
             catch (Exception ex)
             {
-                Debug.LogWarning("[SendQueuedAudio] ����: " + ex.Message);
+                Debug.LogWarning("[SendQueuedAudio] 소켓전송 실패: " + ex.Message);
             }
-        }/*
-        try
-        {
-            await ws.Send(data);
-            Debug.Log($"[SendBytes] ����: {data.Length} bytes");
         }
-        catch (Exception ex)
-        {
-            Debug.LogWarning("[SendBytes] ����: " + ex.Message);
-        }*/
     }
 
     async void OnApplicationQuit()

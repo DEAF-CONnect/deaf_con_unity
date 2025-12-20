@@ -11,24 +11,22 @@ public class AudioController : MonoBehaviour
     private WebSocket ws;
 
     private AudioClip micClip;
-    private int sampleRate = 16000; // STT ���� ǥ�� sample rate
-    private int prevPos = 0;
+    private int sampleRate = 16000; 
 
     public string pythonWS;
     IEnumerator Start()
     {
-        // Android ���� üũ
+        /
 #if UNITY_ANDROID
         if (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
         {
             Permission.RequestUserPermission(Permission.Microphone);
-            // ����ڰ� ����� ������ ���
+            
             while (!Permission.HasUserAuthorizedPermission(Permission.Microphone))
                 yield return null;
         }
 #endif
 
-        // WebSocket ���� ����
         yield return StartCoroutine(WebSocketConnectRoutine());
     }
 
@@ -36,13 +34,11 @@ public class AudioController : MonoBehaviour
     {
         ws = new WebSocket(wsUrl);
 
-        // WebSocket �̺�Ʈ ���
         ws.OnOpen += () => Debug.Log("WebSocket Connected!");
         ws.OnError += (e) => Debug.LogError("WebSocket Error: " + e);
         ws.OnClose += (e) => Debug.Log("WebSocket Closed");
 
         var connectTask = ws.Connect();
-        //Debug.Log("Microphone device: ");
         while (!connectTask.IsCompleted)
         {
             yield return null;
@@ -55,11 +51,10 @@ public class AudioController : MonoBehaviour
         }
 
         Debug.Log("WebSocket Connected!");
-        // ����ũ ��ġ Ȯ��
         Debug.Log($"this is : {Microphone.devices.Length}");
         if (Microphone.devices.Length == 0)
         {
-            Debug.LogError("����ũ ��ġ�� �����ϴ�.");
+            Debug.LogError("There's no mircrophone");
             yield break;
         }else
         {
@@ -70,16 +65,14 @@ public class AudioController : MonoBehaviour
             Debug.Log("Microphone device: " + device);
         }
 
-        // ����ũ ���� ����
         micClip = Microphone.Start(null, true, 5, sampleRate);
         if (micClip == null)
         {
-            Debug.LogError("����ũ�� ã�� �� ����");
+            Debug.LogError("Mic doesn't Start");
             yield break;
         }
         Debug.Log($"Mic started successfully: {sampleRate} Hz, Channels: {micClip.channels}, Samples: {micClip.samples}");
 
-        // ��Ʈ���� ����
         StartCoroutine(StreamAudioRoutine());
     }
 

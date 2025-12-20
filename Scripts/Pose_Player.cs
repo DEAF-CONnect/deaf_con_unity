@@ -30,7 +30,6 @@ public class PosePlayer : MonoBehaviour
             return;
         }
 
-        // JSON ÃÖ»óÀ§ °´Ã¼·Î ÀÐ±â
         frames = JsonHelper.FromJson<FrameData>(jsonFile.text);
         if (frames == null || frames.Length == 0)
         {
@@ -55,48 +54,27 @@ public class PosePlayer : MonoBehaviour
         timer += Time.deltaTime;
         float frameTime = 1f / frameRate;
 
-        /*if (timer >= frameTime)
-        {
-            ApplyFrame(frames[currentFrame]);
-            currentFrame = (currentFrame + 1) % frames.Length;
-            timer = 0f;
-        }*/
+        
         while (timer >= frameTime)
         {
             timer -= frameTime;
-            //Debug.Log("Applying frame: " + currentFrame + ", t=" + frames[currentFrame].t);
 
             
             if (currentFrame >= frames.Length)
             {
-                /*if (!loop)
-                {
-                    playbackFinished = true;
-                    OnPlaybackFinished?.Invoke();
-                    return;
-                }
-                else
-                {
-                    currentFrame = 0;
-                }*/
+                
                 playbackFinished = true;
-                Debug.Log("QWER JSON Àç»ý Á¾·á");
+                Debug.Log("QWER JSON ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 OnPlaybackFinished?.Invoke();
                 return;
             }
             var frame = frames[currentFrame];
             skeletonMapper.SetFrame(frame);
-            Debug.Log("ÇÁ·¹ÀÓ Àç»ý Áß: " + currentFrame);
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½: " + currentFrame);
             currentFrame++;
             //currentFrame = loop ? 0 : frames.Length - 1;
         }
     }
-    /*void ApplyFrame(FrameData frame)
-    {
-        skeletonMapper.ApplyPose(frame.pose, scale);
-        skeletonMapper.ApplyHand(frame.left_hand, true, scale);
-        skeletonMapper.ApplyHand(frame.right_hand, false, scale);
-    }
-    */
+    
 
 }
