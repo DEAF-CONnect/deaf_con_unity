@@ -4,6 +4,7 @@ using UnityEngine;
 using NativeWebSocket;
 using System.Threading.Tasks;
 using System;
+//json 받아오기
 [System.Serializable]
 public class AppConfig
 {
@@ -72,7 +73,7 @@ public class UnityWebSocketPlayer : MonoBehaviour
     //if (!active) return;
         lock (frameQueueLock)
         {
-            if (frameQueue.Count > 0)
+            while (frameQueue.Count > 0)
             {
                 
                 Debug.Log("websocket frame !");

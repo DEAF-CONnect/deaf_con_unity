@@ -64,13 +64,13 @@ public class PosePlayer : MonoBehaviour
             {
                 
                 playbackFinished = true;
-                Debug.Log("QWER JSON ��� ����");
+                Debug.Log("QWER JSON START");
                 OnPlaybackFinished?.Invoke();
                 return;
             }
             var frame = frames[currentFrame];
             skeletonMapper.SetFrame(frame);
-            Debug.Log("������ ��� ��: " + currentFrame);
+            Debug.Log("FRAME #: " + currentFrame);
             currentFrame++;
             //currentFrame = loop ? 0 : frames.Length - 1;
         }

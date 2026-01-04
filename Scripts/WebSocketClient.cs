@@ -5,6 +5,7 @@ using UnityEngine.Android;
 using NativeWebSocket;
 using System.Collections.Generic;
 using System.Collections;
+// 오디오 전달
 [System.Serializable]
 public class AppConfig
 {
@@ -24,6 +25,8 @@ public class WebSocketClient : MonoBehaviour
     private int lastSamplePosition = 0;
     private readonly object audioQueueLock = new object();
     private readonly Queue<byte[]> audioQueue = new Queue<byte[]>();
+
+    private bool sendingLoopRunning = false ;
     //public bool active = false;
     void Start()
     {
@@ -170,6 +173,10 @@ public class WebSocketClient : MonoBehaviour
                 audioQueue.Enqueue(pcmBytes);
             }
             // _ = SendBytes(pcmBytes);
+            /*
+            * update()에서 매번 프레임을 호출함
+            * SendQueuedAudio() 가 async Task , 여러개의 Send 루프가 동시 실행
+            */
             _ = SendQueuedAudio();
         }
         catch (Exception ex)
@@ -196,25 +203,25 @@ public class WebSocketClient : MonoBehaviour
     private async Task SendQueuedAudio()
     {
         
-        if (ws == null || ws.State != WebSocketState.Open) return;
-        while (true)
-        {
-            byte[] data = null;
-            lock (audioQueueLock)
+        if (sendingLoopRunning) return;
+        sendingLoopRunning = true;
+        try{    
+            while (ws != null && ws.State == WebSocketState.Open)
             {
-                if (audioQueue.Count > 0) data = audioQueue.Dequeue();
-            }
+                byte[] data = null;
+                lock (audioQueueLock)
+                {
+                    if (audioQueue.Count > 0) data = audioQueue.Dequeue();
+                }
 
-            if (data == null) break;
-            Debug.Log($"[SendBytes] . data.Length = {data.Length}");
-            try
-            {
-                await ws.Send(data);
+                if (data == null){
+                    await ws.Send(data);
+                }
+                await Task.delay(10);
             }
-            catch (Exception ex)
-            {
-                Debug.LogWarning("[SendQueuedAudio] 소켓전송 실패: " + ex.Message);
-            }
+        }
+        finally{
+            sendingLoopRunning = false;
         }
     }
 
