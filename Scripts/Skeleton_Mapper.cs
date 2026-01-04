@@ -15,11 +15,10 @@ public class SkeletonMapper : MonoBehaviour
     public Animator animator;
 
     [Header("Scale/Depth")]
-    [Tooltip("����ȭ(0~1) ��ǥ�� ����� ��ȯ�� ���� ũ�� ����")]
     public float worldScale = 1.5f;
 
     [Header("Smoothing")]
-    [Range(0f, 1f)] public float emaAlpha = 0.3f; // 0.6: ���� ����(�������) / 0.2: ����(������)
+    [Range(0f, 1f)] public float emaAlpha = 0.3f; 
 
     [Header("Arm Fine Tuning")]
     public Vector3 leftUpperArmOffsetEuler = Vector3.zero;

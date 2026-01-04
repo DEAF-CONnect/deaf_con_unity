@@ -42,8 +42,7 @@ public class BeatSign : MonoBehaviour
         foreach (float beatTime in beats)
         {
             float targetTime = startTime + beatTime;
-
-            // ��Ȯ�� �ð����� ��ٸ�
+            
             while (Time.time < targetTime)
                 yield return null;
 
