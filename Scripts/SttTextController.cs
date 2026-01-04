@@ -4,6 +4,7 @@ using UnityEngine;
 using NativeWebSocket;
 using TMPro;
 [System.Serializable]
+//stt 받아오기
 public class AppConfig
 {
     public string web_socket;
@@ -32,7 +33,7 @@ async void Start()
             string sttM = Encoding.UTF8.GetString(bytes);
             Debug.Log("WS STT TEXT: " + sttM);
             if (textUI != null)
-                textUI.text = sttM;
+                textUI.text += "\n" sttM;
         };
         websocket.OnError += (err) =>
         {
